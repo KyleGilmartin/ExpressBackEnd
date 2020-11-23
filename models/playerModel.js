@@ -23,6 +23,7 @@ const PlayerSchema = new Schema({
         weekFoot: { type: String, required: true },
 
 
+
     }, { toJSON: { virtuals: true } }) // include virtuals when document is converted to JSON
 
 
