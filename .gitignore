@@ -23,3 +23,9 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+
+## SSL certificate
+ssl
+
+#config
+config.js

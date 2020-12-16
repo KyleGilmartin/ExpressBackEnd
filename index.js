@@ -1,12 +1,23 @@
 import express from 'express';
-
 import players from './routes/players';
+import users from './routes/users';
+import auth from './routes/auth'
+import https from 'https';
+import fs from 'fs'
+
 import mongoose from 'mongoose';
 import cors from 'cors';
+import config from './config'
+
+
+
+
+
 
 
 const app = express();
-app.use('/players', cors());
+
+app.use(cors());
 
 const port = 3000;
 
@@ -15,7 +26,8 @@ const port = 3000;
 // Errors awill be logged to the console.
 // this would normally come from a config file
 
-const connectionString = 'mongodb://127.0.0.1:27017/epl'
+//const connectionString = 'mongodb://127.0.0.1:27017/epl'
+const connectionString = config.connectionString;
 
 mongoose.connect(connectionString, {
     "useNewUrlParser": true,
@@ -36,6 +48,14 @@ db.once('open', () => {
     console.log("DB connected")
 });
 
+const sslOptions = {
+
+    key: fs.readFileSync("ssl/kylelocal.key"),
+
+    cert: fs.readFileSync("ssl/kylelocal.cert")
+
+};
+
 
 
 // Configuring the built-in express body parser middleware
@@ -44,6 +64,8 @@ app.use(express.json());
 
 
 app.use('/players', players);
+app.use('/users', users);
+app.use('/auth', auth);
 
 
 app.get('/', (req, res) =>
@@ -63,5 +85,15 @@ app.all('*', (req, res) => {
     });
 });
 
+
+
+
+
+
+
 app.listen(port, () => console.log(`Example app listening on 
   ${port}!`))
+
+
+https.createServer(sslOptions, app).listen(8080, () =>
+    console.log('listening on 8080 too, don\'t forget the https'));
