@@ -9,12 +9,6 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import config from './config'
 
-
-
-
-
-
-
 const app = express();
 
 app.use(cors());

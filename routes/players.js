@@ -4,6 +4,10 @@ import db from '../models/playerService';
 
 const router = express.Router();
 
+router.put('/:id', (req, res) => {
+
+    db.updateBook(req, res)
+})
 
 router.post('/', (req, res) => {
     db.createBook(req, res);
@@ -30,9 +34,6 @@ router.delete('/:id', (req, res) => {
 
 })
 
-router.put('/:id', (req, res) => {
 
-    db.updateBook(req, res)
-})
 
 export default router;

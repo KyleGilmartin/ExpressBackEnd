@@ -15,7 +15,7 @@ function readBooks(req, res, options = []) {
 
     if (name) {
 
-        filter.title = { $regex: `^${title}$`, $options: 'i' };
+        filter.title = { $regex: `^${name}$`, $options: 'i' };
     }
 
     if (isbn) {
@@ -81,7 +81,7 @@ function updateBook(req, res) {
 
     // note the syntax here. 
     // ...req.body - the three 
-    Player.findByIdAndUpdate({ _id: id }, {...req.body }).
+    Player.findOneAndUpdate({ isbn: id }, {...req.body }).
     then((result) => {
             if (result) {
                 res.status(200).send({ message: 'updated' })
@@ -96,7 +96,7 @@ function updateBook(req, res) {
 }
 
 function deleteBook(req, res) {
-    const id = req.params.id;
+    const id = req.params.isbn;
 
     Player.findByIdAndDelete(id).
     then((result) => {
